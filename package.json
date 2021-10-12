@@ -1,5 +1,5 @@
 {
-  "name": "book-system",
+  "name": "my-music",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,8 @@
     "axios": "^0.21.1",
     "core-js": "^3.16.3",
     "element-ui": "^2.15.6",
+    "less": "^4.1.2",
+    "less-loader": "^10.1.0",
     "nprogress": "^0.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.5.2",

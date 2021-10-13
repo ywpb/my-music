@@ -6,11 +6,21 @@ import store from '@/store/index'
 
 import {
   Button,
-  Row
+  Row,
+  Col,
+  Container,
+  Header,
+  Main,
+  Input
 } from 'element-ui'
 
 Vue.use(Button)
 .use(Row)
+.use(Container)
+.use(Header)
+.use(Main)
+.use(Col)
+.use(Input)
 
 Vue.config.productionTip = false
 

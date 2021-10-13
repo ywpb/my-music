@@ -5,7 +5,7 @@ import Vue from "vue";
 Vue.use(VueRouter)
 
 const routes = [
-    {path:'/',component:()=>import('@/components/HelloWorld.vue')}
+    {path:'/',component:()=>import('@/components/Main.vue')}
 ]
 
 const router  = new VueRouter({

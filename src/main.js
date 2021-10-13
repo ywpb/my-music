@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import less from 'less'
 import router from '@/router/index'
 import store from '@/store/index'
 
@@ -16,7 +15,6 @@ Vue.use(Button)
 Vue.config.productionTip = false
 
 
-Vue.use(less)
 
 
 new Vue({

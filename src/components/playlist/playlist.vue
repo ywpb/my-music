@@ -5,10 +5,18 @@
 </template>
 
 <script>
+import {playlistDetail} from '@/api/recommend'
 export default {
     name:'palylist',
-    mounted(){
-        console.log('object');
+    data(){
+        return{
+            playlistDetail:{},
+            id:this.$route.query.id
+        }
+    },
+    async mounted(){
+        const {data} = await playlistDetail(this.id);
+        console.log(data);
     }
 }
 </script>

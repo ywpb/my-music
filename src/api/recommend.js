@@ -7,3 +7,14 @@ export const recomSongList = ()=>{
         method:'get'
     })
 }
+
+//获取歌单详情
+export const playlistDetail = (id) => {
+    return request({
+        url:'/playlist/detail',
+        method:'get',
+        params:{
+            id:id
+        }
+    })
+}

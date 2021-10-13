@@ -4,19 +4,17 @@
         <Header></Header>
     </el-header>
     <el-main>
-      <recommend></recommend>
+      <router-view></router-view>
     </el-main>
 </el-container>
 </template>
 
 <script>
 import Header from '@/components/layout/header.vue'
-import recommend from '@/view/recommend.vue'
 export default {
   name: 'App',
   components:{
       Header,
-      recommend
     }
 }
 </script>

@@ -4,13 +4,19 @@ import Vue from "vue";
 
 Vue.use(VueRouter)
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(localhost){
+    return originalPush.call(this,localhost).catch(err => err)
+}
+
 const routes = [
-    {path:'/',component:()=>import('@/components/Main.vue')},
-    {path:'/playlist/:id',component:()=>import('@/components/playlist/index.vue')}
+    {path:'/',component:()=>import('@/view/recommend.vue')},
+    {path:'/playlist/:id',name:'playlist',component:()=>import('@/components/playlist/playlist.vue'), props:true},
 ]
 
 const router  = new VueRouter({
     routes
 })
+
 
 export default router

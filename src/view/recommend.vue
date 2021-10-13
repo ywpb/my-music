@@ -65,7 +65,7 @@ export default {
     },
     methods:{
         goPlayList(id){
-            this.$router.push({path:'/playlist',query:{id}})
+            this.$router.push({name:'playlist',query:{id}})
         }
     },
     async mounted(){

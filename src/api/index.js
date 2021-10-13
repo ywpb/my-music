@@ -1,4 +1,4 @@
-import request from "./ajax";
+import request from "@/utils/ajax";
 
 export const Login = () => {
     return request({

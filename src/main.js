@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from '@/router/index'
 import store from '@/store/index'
 
-
 import {
   Button,
   Row,
@@ -11,7 +10,8 @@ import {
   Container,
   Header,
   Main,
-  Input
+  Input,
+  Card
 } from 'element-ui'
 
 Vue.use(Button)
@@ -21,6 +21,7 @@ Vue.use(Button)
 .use(Main)
 .use(Col)
 .use(Input)
+.use(Card)
 
 Vue.config.productionTip = false
 

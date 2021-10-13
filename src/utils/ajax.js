@@ -22,7 +22,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response) => {
         NProgress.done();
-        return response.data
+        return Promise.resolve(response)
     },
     (error) => {
         NProgress.done();

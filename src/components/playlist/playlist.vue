@@ -1,13 +1,21 @@
 <template>
-    <div class="bg">
-        sdfasdfasdf
+    <div>
+        <card>
+            <div slot="header">
+                <span></span>
+            </div>
+        </card>
     </div>
 </template>
 
 <script>
 import {playlistDetail} from '@/api/recommend'
+import card from '@/components/layout/card.vue'
 export default {
     name:'palylist',
+    components:{
+        card
+    },
     data(){
         return{
             playlistDetail:{},
@@ -15,8 +23,8 @@ export default {
         }
     },
     async mounted(){
-        const {data} = await playlistDetail(this.id);
-        console.log(data);
+        const {data:{playlist}} = await playlistDetail(this.id);
+        console.log(playlist);
     }
 }
 </script>

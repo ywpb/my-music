@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from '@/router/index'
 import store from '@/store/index'
 
+import './assets/static/iconfont'
+import './assets/static/icon.css'
+
 import {
   Button,
   Row,

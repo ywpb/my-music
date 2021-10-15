@@ -50,6 +50,9 @@ img{
     height: 50px;
     margin-right: 40px;
 }
+.el-row{
+    min-width: 1200px;
+}
 .el-col{
     height: 72px !important;
     a{

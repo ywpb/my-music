@@ -11,3 +11,13 @@ export const allSongs = (ids) =>{
     })
 
 }
+
+export const getAlbum = (id)=>{
+    return request({
+        url:'/album',
+        method:'get',
+        params:{
+            id:id
+        }
+    })
+}

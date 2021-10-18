@@ -12,14 +12,41 @@
                     </div>
                 </div>
             </div>
+            <div slot="main">
+                <div class="main">
+                    <table class="table">
+                    <tr class="songs-title">
+                        <th></th>
+                        <th>播放</th>
+                        <th>歌名</th>
+                        <th>歌手</th>
+                        <th>专辑</th>
+                    </tr>
+                    <tr class="songs" v-for="(song,index) in getSongs" :key="song.id">
+                        <td class="id">{{index+1}}</td>
+                        <td class="play">播放</td>
+                        <td class="song song-name">
+                            <a href="">{{song.name}}</a>
+                        </td>
+                        <td class="song song-sings">
+                                <a href="" v-for="ar in song.ar" :key='ar.id'>{{ar.name}}</a>
+                        </td>
+                        <td class="song song-album">
+                            <a href="javascript:void(0);" @click='album(song.al.id)'>{{song.al.name}}</a>
+                        </td>
+                    </tr>
+                </table>
+                </div>
+            </div>
         </card>
     </div>
 </template>
 
 <script>
 import {playlistDetail} from '@/api/recommend'
-import {allSongs} from '@/api/song'
+import {allSongs,getAlbum} from '@/api/song'
 import card from '@/components/layout/card.vue'
+import { Footer } from 'element-ui'
 export default {
     name:'palylist',
     components:{
@@ -29,19 +56,19 @@ export default {
         return{
             playlist:{},
             id:'',
-            allSongs:{}
+            idsAll:[]
         }
     },
     methods:{
         _formatSongs(list){
-            console.log(list);
-            const res = []
+            const res = []  
             list.songs.map((item,index)=>{
                 if(item.id){
                     item.license = !list.privileges[index].cp
-                    res.push()
+                    res.push(item)
                 }
             })
+            return res;
         },
 
         //获取歌单
@@ -65,8 +92,25 @@ export default {
                 idsAll = idsAll.concat(this._formatSongs(res))
             }
 
-            
-            
+            this.idsAll = idsAll
+        },
+        goPlayList(id){
+            return this.$router.push({name:'playlist',query:{id}})
+        },
+        async album(id){
+            const {data:res} = await getAlbum(id)
+            console.log(res);
+        }
+    },
+    computed:{
+        getSongs:function(){
+            // console.log('idsAll',this.idsAll);
+            const data = []
+            this.idsAll.map(value=>{
+                const {id,name,al,ar} = value
+                data.push({id,name,al,ar})
+            })
+            return data
         }
     },
     mounted(){
@@ -100,4 +144,45 @@ export default {
     }
     
 }
+
+.main{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.table{
+    width: 90%;
+    text-align: left;
+    border: 1px solid #333;
+    box-sizing: border-box;
+    font-size: 15px;
+
+    tr:nth-of-type(2n+1){
+        background-color: #f7f7f7;
+    }
+    .song-name{
+        font-weight: bold;
+        color: #333;
+    }
+    .songs-title{
+        font-size: 15px;
+        font-weight: normal;
+        th{
+            padding: 10px;
+        }
+    }
+    .song-sings{
+        display: flex;
+        a{
+            display: block;
+        }
+        a:nth-of-type(n+2)::before{
+            content:"/"
+        }
+    }
+}
+
+
 </style>

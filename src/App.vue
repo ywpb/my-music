@@ -44,11 +44,12 @@ body {
 .clearfix{ 
     *zoom:1;/*IE/7/6*/ 
 } 
-a{color:#666; text-decoration:none; }
+a{color:#333; text-decoration:none; }
 a:hover{color:#C81623;}
 h1,h2,h3,h4,h5,h6{text-decoration:none;font-weight:normal;}
 s,i,em{font-style:normal;text-decoration:none;}
 .col-red{color: #C81623!important;}
+
 
 /*公共类*/
 .w{
@@ -73,10 +74,12 @@ s,i,em{font-style:normal;text-decoration:none;}
     display:none
 }
 
+
 .el-header{
     height: 72px !important;
     background-color: #191919 !important;
     border-bottom:2px solid #434343;
+    z-index: 1000;
 }
 .el-header, .el-footer {
     background-color: #B3C0D1;
@@ -100,6 +103,8 @@ s,i,em{font-style:normal;text-decoration:none;}
   
   body > .el-container {
     margin-bottom: 40px;
+    width: 100%;
+    overflow-x: hidden;
   }
   
   .el-container:nth-child(5) .el-aside,

@@ -14,7 +14,9 @@ import {
   Header,
   Main,
   Input,
-  Card
+  Card,
+  Table,
+  TableColumn
 } from 'element-ui'
 
 Vue.use(Button)
@@ -25,6 +27,8 @@ Vue.use(Button)
 .use(Col)
 .use(Input)
 .use(Card)
+.use(Table)
+.use(TableColumn)
 
 Vue.config.productionTip = false
 

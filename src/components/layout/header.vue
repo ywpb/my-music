@@ -51,7 +51,8 @@ img{
     margin-right: 40px;
 }
 .el-row{
-    min-width: 1200px;
+    width: 1100px;
+    margin: 0 auto;
 }
 .el-col{
     height: 72px !important;
@@ -62,9 +63,6 @@ img{
         font-family: 'Alibaba-PuHuiTi-R';
         height: 72px;
         padding: 0px 20px;
-        // display: flex;
-        // justify-content: center;
-        // align-content: center;
     }
 }
 .el-col-2{

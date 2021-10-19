@@ -13,30 +13,7 @@
                 </div>
             </div>
             <div slot="main">
-                <div class="main">
-                    <table class="table">
-                    <tr class="songs-title">
-                        <th></th>
-                        <th>播放</th>
-                        <th>歌名</th>
-                        <th>歌手</th>
-                        <th>专辑</th>
-                    </tr>
-                    <tr class="songs" v-for="(song,index) in getSongs" :key="song.id">
-                        <td class="id">{{index+1}}</td>
-                        <td class="play">播放</td>
-                        <td class="song song-name">
-                            <a href="">{{song.name}}</a>
-                        </td>
-                        <td class="song song-sings">
-                                <a href="" v-for="ar in song.ar" :key='ar.id'>{{ar.name}}</a>
-                        </td>
-                        <td class="song song-album">
-                            <a href="javascript:void(0);" @click='album(song.al.id)'>{{song.al.name}}</a>
-                        </td>
-                    </tr>
-                </table>
-                </div>
+                <song-list class="songlist" :songlist='songlist'></song-list>
             </div>
         </card>
     </div>
@@ -46,17 +23,19 @@
 import {playlistDetail} from '@/api/recommend'
 import {allSongs,getAlbum} from '@/api/song'
 import card from '@/components/layout/card.vue'
-import { Footer } from 'element-ui'
+import {formatSongInfo} from '@/utils/song.js'
+import songList from '@/components/common/song-list.vue'
 export default {
     name:'palylist',
     components:{
-        card
+        card,
+        songList
     },
     data(){
         return{
             playlist:{},
             id:'',
-            idsAll:[]
+            songlist:[]
         }
     },
     methods:{
@@ -65,7 +44,7 @@ export default {
             list.songs.map((item,index)=>{
                 if(item.id){
                     item.license = !list.privileges[index].cp
-                    res.push(item)
+                    res.push(formatSongInfo(item))
                 }
             })
             return res;
@@ -89,10 +68,10 @@ export default {
             }
             for(let i=0; i<sliceArr.length; i++){
                 const {data:res} = await allSongs(sliceArr[i].map(value=>value.id).join(','))
+                console.log(res);
                 idsAll = idsAll.concat(this._formatSongs(res))
             }
-
-            this.idsAll = idsAll
+            this.songlist = idsAll
         },
         goPlayList(id){
             return this.$router.push({name:'playlist',query:{id}})
@@ -103,15 +82,6 @@ export default {
         }
     },
     computed:{
-        getSongs:function(){
-            // console.log('idsAll',this.idsAll);
-            const data = []
-            this.idsAll.map(value=>{
-                const {id,name,al,ar} = value
-                data.push({id,name,al,ar})
-            })
-            return data
-        }
     },
     mounted(){
         this.id = this.$route.query.id? this.$route.query.id: 0;
@@ -125,8 +95,8 @@ export default {
 .playlist-header{
     display: flex;
     .cover-img{
-        width: 120px;
-        height: 120px;
+        width: 280px;
+        height: 280px;
     }
     .icon-gedan{
         width: 60%;
@@ -134,54 +104,15 @@ export default {
         flex-direction: column;
         text-align: center;
         #cover-name{
-            font-size: 20px;
+            font-size: 24px;
         }
         #cover-description{
-            font-size: 10px;
+            font-size: 14px;
             width: 80%;
             margin-left: 10%;
         }
     }
     
-}
-
-.main{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-
-.table{
-    width: 90%;
-    text-align: left;
-    border: 1px solid #333;
-    box-sizing: border-box;
-    font-size: 15px;
-
-    tr:nth-of-type(2n+1){
-        background-color: #f7f7f7;
-    }
-    .song-name{
-        font-weight: bold;
-        color: #333;
-    }
-    .songs-title{
-        font-size: 15px;
-        font-weight: normal;
-        th{
-            padding: 10px;
-        }
-    }
-    .song-sings{
-        display: flex;
-        a{
-            display: block;
-        }
-        a:nth-of-type(n+2)::before{
-            content:"/"
-        }
-    }
 }
 
 

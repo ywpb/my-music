@@ -3,8 +3,9 @@ import App from './App.vue'
 import router from '@/router/index'
 import store from '@/store/index'
 
-import './assets/static/iconfont'
-import './assets/static/icon.css'
+import './assets/static/iconfont.js'
+import SvgIcon from '@/components/iconfont/svgIcon.vue'
+Vue.component("svg-icon", SvgIcon);
 
 import {
   Button,

@@ -8,7 +8,7 @@
                     <th class="columnTime">时长</th>
                 </tr>
                 <tr class="list-scroll" v-for="(song,index) in songlist" :key="song.id">
-                    <td class="columnIndex" @click="songPlay(song.id)">
+                    <td class="columnIndex" @click="songPlay(song)">
                         <div class="songlist-index">{{index+1}}</div>
                         <svg-icon iconname="icon-bofang" class="columnPlay">
                         </svg-icon>
@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import {formatSongInfo} from '@/utils/song.js'
+import {formatSongInfo,formatSongDetails} from '@/utils/song.js'
+import {mapMutations,mapActions} from 'vuex'
 export default {
     name:'songList',
     props:{
@@ -44,9 +45,10 @@ export default {
         }
     },
     methods:{
-        async songPlay(id){
-            const {data:res} = await getSongUrl(id)
-            console.log(res);
+
+        //单独播放音乐
+        songPlay(song){
+            
         }
     }
 }

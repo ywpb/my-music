@@ -16,18 +16,18 @@ export default {
     selectPlay({commit,state},{list}){
         //合并歌曲到播放列表查看
         const playList = concatPlaylist(list,state.playList)
-        commit(types.SET_PLAYLIST,playList)
-        commit(types.SET_PLAYSTATE,true)
-        commit(types.SET_PLAYINDEX,findIndex(list,state.playlist))  
+        commit(SET_PLAYLIST,playList)
+        commit(SET_PLAYSTATE,true)
+        commit(SET_PLAYINDEX,findIndex(list,state.playlist))  
     },
     addList({commit},list){
         const playList = concatPlaylist(list,state.playList)
-        commit(types.SET_PLAYLIST,playList)
+        commit(SET_PLAYLIST,playList)
     },
     playAll({commit},list){
         const playList = concatPlaylist(list,state.playList)
-        commit(types.SET_PLAYLIST,playList)
-        commit(types.SET_PLAYSTATE,true)
+        commit(SET_PLAYLIST,playList)
+        commit(SET_PLAYSTATE,true)
         // commit(types.SET_PLAYINDEX, 0)
     }
 }

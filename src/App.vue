@@ -6,15 +6,18 @@
     <el-main>
       <router-view></router-view>
     </el-main>
+    <player></player>
 </el-container>
 </template>
 
 <script>
 import Header from '@/components/layout/header.vue'
+import Player from '@/components/player/player.vue'
 export default {
   name: 'App',
   components:{
       Header,
+      Player
     }
 }
 </script>
@@ -120,4 +123,5 @@ s,i,em{font-style:normal;text-decoration:none;}
     width: 1200px;
     align-self: center;
   }
+ 
 </style>

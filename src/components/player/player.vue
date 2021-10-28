@@ -150,9 +150,9 @@ export default {
             margin: 0px 10px;
         }
     } 
+    .play{
+        width: 600px;
+    }
 }
 
-.btmbar .wrap .play{
-    width: 600px;
-}
 </style>

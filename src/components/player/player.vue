@@ -7,23 +7,33 @@
         <div class="right"></div>
     </div>
     <div class="bg"></div>
-    <div title="播放条"></div>
     <div class="wrap">
         <div class="btns">
             <a class="prv" href="javascript:;"  hidefocus='true' title="上一首">上一首</a>
             <a class="ply j-flag" href="javascript:;"  hidefocus='true' title="播放/暂停">播放/暂停</a>
             <a class="next" href="javascript:;"  hidefocus='true' title="下一首">下一首</a>
         </div>
+        <!--进度条-->
         <div class="play">
             <div class="word">
-                <a href="name f-fl">稻香</a>
+                <a href="name f-fl">稻香&nbsp;</a>
                 <span class="by f-fl">
                     <span title="周杰伦">
                         <a href="javascript:;" class="" hidefocus='true'>周杰伦</a>
                     </span>
                 </span>
             </div>
-            <div class="m-pbar"></div>
+            <div class="m-pbar">
+                <div class="cur" style="width:30%">
+                    <span class="f-tdn">
+                        <i></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--设置-->
+        <div class="ctrl">
+
         </div>
     </div>
 </div>
@@ -39,6 +49,12 @@ export default {
 <style lang="less" scoped>
 .bg, .left,.right,.left a,.btmbar .btns,.prv,.ply,.next {
         background: url('../../assets/playbar.png') no-repeat 0 9999px;
+}
+.cur,.m-pbar{
+    background: url('../../assets/statbar.png') no-repeat 0 9999px;
+}
+.f-tdn,.f-tdn i{
+    background: url('../../assets/iconall.png') no-repeat 0 9999px;
 }
 .btmbar{
     width: 100%;
@@ -152,6 +168,36 @@ export default {
     } 
     .play{
         width: 600px;
+
+        a{
+            color:#f3f3f3;
+        }
+
+        .word{
+            .name::after{
+                content: '';
+            }
+        }
+        .m-pbar{
+            width: 500px;
+            margin-bottom: 10px;
+            height: 9px;
+            background-position: left 0;
+            .cur{
+                position: relative;
+                height: 9px;
+                background-position: left -66px;
+                .f-tdn{
+                    position: absolute;
+                    right: -15px;
+                    top: -7px;
+                    display: block;
+                    height: 24px;
+                    width: 22px;
+                    background-position: 0 -250px;
+                }
+            }
+        }
     }
 }
 

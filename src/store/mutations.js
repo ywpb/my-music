@@ -1,26 +1,21 @@
+import * as types from './mutation-types'
+
 export default {
 
     //设置播放列表
-    // [types.SET_PLAYLIST](content, value = null){
-    //     content.state = value
-    //     window.localStorage.setItem('playList',JSON.stringify(value))
-    // },
-    // [types.SET_PLAYSTATE](content,types){
-    //     content.isPlayed = types
-    // },
-    // [types.SET_PLAYINDEX](content,index){
-    //     content.playIndex = index
-    // },
-
-    SET_PLAYLIST(content, value = null){
-        content.state = value
+    [types.SET_PLAYLIST](content, value = null){
+        content.playList = value
         window.localStorage.setItem('playList',JSON.stringify(value))
     },
-    SET_PLAYSTATE(content,types){
-        content.isPlayed = types
-    },
-    SET_PLAYINDEX(content,index){
-        content.playIndex = index
+
+    //是否播放
+    [types.SET_PLAYSTATUS](content,val = null){
+        content.isPlayed = val
     },
 
+    //当前音乐所在位置
+    [types.SET_PLAYINDEX](content,index = 0){
+        content.playIndex = index
+    },
+ 
 }

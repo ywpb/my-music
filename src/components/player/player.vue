@@ -16,10 +16,10 @@
         <!--进度条-->
         <div class="play">
             <div class="word">
-                <a href="name f-fl">稻香&nbsp;</a>
+                <a href="name f-fl">{{player.name}}&nbsp;</a>
                 <span class="by f-fl">
-                    <span title="周杰伦">
-                        <a href="javascript:;" class="" hidefocus='true'>周杰伦</a>
+                    <span class="author" :title="player.author">
+                        <a href="javascript:;" class="" hidefocus='true'>{{player.author}}</a>
                     </span>
                 </span>
             </div>
@@ -29,11 +29,21 @@
                         <i></i>
                     </span>
                 </div>
+                <span class="p-timer">00:00/{{player.timer}}</span>
             </div>
         </div>
         <!--设置-->
         <div class="ctrl">
-
+            <!-- <div class="modes">
+                <div class="loop"></div>
+            </div> -->
+            <div class="volume c-fl">
+                <div class="v-column" style="display:none">
+                </div>
+            </div>
+            <div class="p-list c-fl">
+                <i>{{[...playList].length}}</i>
+            </div>
         </div>
     </div>
 </div>
@@ -41,13 +51,27 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
-
+    name:'player',
+    data(){
+        return {
+            player:{
+                author:'周杰伦',
+                name:'稻香',
+                timer:'00:00'
+            }
+        }
+    },
+    computed:{
+        ...mapState(['playList']),
+    }
 }
 </script>
 
 <style lang="less" scoped>
-.bg, .left,.right,.left a,.btmbar .btns,.prv,.ply,.next {
+.bg, .left,.right,.left a,.btmbar .btns,.prv,.ply,.next,.volume,.v-column,.v-strip,
+.p-list{
         background: url('../../assets/playbar.png') no-repeat 0 9999px;
 }
 .cur,.m-pbar{
@@ -133,7 +157,7 @@ export default {
     width: 1000px;
     height: 50px;
     position: absolute;
-    left: 50%;
+    left: 33%;
     top: 6px;
     margin: 0 auto;
     display: flex;
@@ -168,7 +192,7 @@ export default {
     } 
     .play{
         width: 600px;
-
+        
         a{
             color:#f3f3f3;
         }
@@ -183,6 +207,8 @@ export default {
             margin-bottom: 10px;
             height: 9px;
             background-position: left 0;
+            position: relative;
+            bottom: -5px;
             .cur{
                 position: relative;
                 height: 9px;
@@ -197,8 +223,50 @@ export default {
                     background-position: 0 -250px;
                 }
             }
+            .p-timer{
+                color: #f3f3f3;
+                // float: right;
+                position: relative;
+                right: -510px;
+                top: -19px;
+            }
         }
     }
+
+
+    .ctrl{
+        display: flex;
+        align-items: center;
+        .c-fl{
+            margin: 0 5px;
+        }
+        .volume{
+            width: 20px;
+            height: 20px;
+            background-position: -5px -250px;
+            .v-column{
+                width: 33px;
+                height: 114px;
+                background-position: -0px -503px;
+                position: relative;
+                bottom: 127px;
+                left: -8px;
+            }
+        }
+        .p-list{
+            height: 25px;
+            width: 60px;
+            background-position: -45px -70px;
+            color: #f3f3f3;
+            i{
+                position: relative;
+                right: -25px;
+                top: 2px;
+            }
+        }
+    }
+    
+    
 }
 
 </style>

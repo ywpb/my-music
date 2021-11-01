@@ -45,11 +45,14 @@ export default {
         }
     },
     methods:{
-
+        
         //单独播放音乐
         songPlay(song){
-            
-        }
+            let list = formatSongDetails(song)
+            this.selectPlay({list})
+        },
+
+        ...mapActions(['selectPlay']),    
     }
 }
 </script>
@@ -75,7 +78,7 @@ export default {
         .text-overflow{
             width: 80%;
             overflow: hidden;
-            white-space: nowrap;
+            // white-space: nowrap;
             text-overflow: ellipsis;
         }
     }

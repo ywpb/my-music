@@ -31,3 +31,14 @@ export function formatSongInfo(list){
         url:`https://music.163.com/song/media/outer/url?id=${list.id}.mp3`
     })
 }
+
+export function formatSongDetails(list){
+    return new song({
+        id:String(list.id),
+        songName:list.songName,
+        songTime:list.songTime,
+        songSings:list.songSings,
+        songAlbum:list.songAlbum,
+        url:`https://music.163.com/song/media/outer/url?id=${list.id}.mp3`
+    })
+}

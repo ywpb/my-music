@@ -1,4 +1,5 @@
 import request from "@/utils/ajax";
+import axios from "axios";
 
 
 //获取歌单所有数据
@@ -45,3 +46,4 @@ export const getSongUrl = (id = '')=>{
         }
     })
 }
+

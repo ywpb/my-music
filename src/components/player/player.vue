@@ -1,6 +1,15 @@
 <template>
-<div class="btmbar">
-    <div class="player">
+<div class="btmbar" v-if="curSongInfo">
+        <div class="player">
+            <audio 
+            ref="audio"
+            preload='audio'
+            @playing="playSong"
+            @timeupdate='updateCurrentTime'
+            @ended="endedSong"
+            :src="curSongInfo.url"
+            >
+            </audio>    
         <div class="left">
             <a href="javascript:;" hidefocus="true"></a>
         </div>
@@ -9,27 +18,28 @@
     <div class="bg"></div>
     <div class="wrap">
         <div class="btns">
-            <a class="prv" href="javascript:;"  hidefocus='true' title="上一首">上一首</a>
-            <a class="ply j-flag" href="javascript:;"  hidefocus='true' title="播放/暂停">播放/暂停</a>
-            <a class="next" href="javascript:;"  hidefocus='true' title="下一首">下一首</a>
+            <a class="prv" href="javascript:;"  hidefocus='true' title="上一首" @click.stop="audioHandler('prev')">上一首</a>
+            <a :class="['j-flag', playIcon]" href="javascript:;"  hidefocus='true' title="播放/暂停" @click.stop="audioHandler('play')">播放/暂停</a>
+            <a class="next" href="javascript:;"  hidefocus='true' title="下一首" @click.stop="audioHandler('next')">下一首</a>
         </div>
         <!--进度条-->
         <div class="play">
             <div class="word">
-                <a href="name f-fl">{{player.name}}&nbsp;</a>
+                <a href="name f-fl">{{curSongInfo.songName || ''}}&nbsp;</a>
                 <span class="by f-fl">
-                    <span class="author" :title="player.author">
-                        <a href="javascript:;" class="" hidefocus='true'>{{player.author}}</a>
+                    <span class="author" title="">
+                        <a href="javascript:;" class="" hidefocus='true' v-for="song in curSongInfo.songSings" :key="song.id">{{song.name}}</a>
                     </span>
                 </span>
             </div>
             <div class="m-pbar">
-                <div class="cur" style="width:30%">
+                <div class="cur" v-bind:style="{width:progressRatio + '%'}">
+                    <!-- <div class="cur" style="width:100%"> -->
                     <span class="f-tdn">
                         <i></i>
                     </span>
                 </div>
-                <span class="p-timer">00:00/{{player.timer}}</span>
+                <span class="p-timer">{{setCurrentTime}}/{{setDuration}}</span>
             </div>
         </div>
         <!--设置-->
@@ -42,7 +52,7 @@
                 </div>
             </div>
             <div class="p-list c-fl">
-                <i>{{[...playList].length}}</i>
+                <i>0</i>
             </div>
         </div>
     </div>
@@ -51,27 +61,148 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+
+import {mapState,mapMutations} from 'vuex'
+import {formatSongTime} from '@/utils/utils'
 export default {
     name:'player',
     data(){
         return {
-            player:{
-                author:'周杰伦',
-                name:'稻香',
-                timer:'00:00'
-            }
+            initAudioReady:false,           //初始化音频
+            isMuted:false,                   //是否静音
+            currentTime:0,                   //音频当前播放时长
+            duration:0,                       //音频总时长
         }
     },
     computed:{
-        ...mapState(['playList']),
+        ...mapState(['playList','playIndex','isPlayed']),
+
+        //切换播放图标样式
+        playIcon(){
+            return this.isPlayed?'icon-audio-play':'icon-audio-pause'
+        },
+        //获取当前播放音乐
+        curSongInfo(){
+            return this.playList[this.playIndex]
+        },
+        //格式化当前播放时间
+        setCurrentTime:function(){
+            return formatSongTime(this.currentTime)
+        },
+        //格式化总时间
+        setDuration(){
+            return formatSongTime(this.duration)
+        },
+        //播放进度条
+        progressRatio(){
+            let ratio
+            if(this.duration !== 0){
+                ratio = this.currentTime / this.duration * 100
+            }else{
+                ratio = 0
+            }
+            
+            return Math.floor(ratio * 100)/100
+        }
+    },
+    watch:{
+        //播放歌曲发生变化，重置状态
+        curSongInfo(newSong,oldSong){
+            if(!newSong || (oldSong && oldSong.id === newSong.id)){
+                return {}
+            }
+            this.initAudioReady = false
+            this.currentTime = 0
+            this.$nextTick(()=>{
+                const audio = this.$refs.audio
+                if(audio){
+                    audio.play()
+                }
+            })
+        },
+        //音频加载完成播放
+        isPlayed(playing){
+            if(!this.initAudioReady){
+                return
+            }
+
+            this.$nextTick(()=>{
+                const audio = this.$refs.audio
+                if(audio){
+                    playing?audio.play():audio.pause()
+                }
+            })
+        }
+    },
+    methods:{
+        ...mapMutations({
+            setPlayStatus:'SET_PLAYSTATUS',
+            setPlayIndex:'SET_PLAYINDEX'
+        }),
+        //更新当前时间
+        updateCurrentTime(e){
+            if(!this.initAudioReady){
+                return
+            }
+            
+            this.currentTime = e.target.currentTime
+        },
+
+        //单曲循环
+        loopSong(){
+            this.$refs.audio.play()
+            this.$refs.audio.currentTime = 0
+            this.setPlayStatus(true)
+        },
+        //自动播放
+        endedSong(e){
+            if(this.playList === 1){
+                this.loopSong()
+            }else{
+                this.changeSong('next')
+            }
+        },
+        //切换，上一首下一首
+        changeSong(type){
+            if(this.playList.length !== 1){
+                let index = this.playIndex
+                if(type ==='prev'){
+                    index = index === 0 ? this.playList.length-1 : index - 1
+                }
+                if(type === 'next'){
+                    index = index === this.playList.length-1 ? 0: index+1
+                }
+                this.initAudioReady = false
+                this.setPlayIndex(index)
+                this.setPlayStatus(false)
+            }else{
+                this.loopSong()
+            }
+
+            
+        },
+        //播放状态，暂停/开始，上一首下一首
+        audioHandler(type){
+            if(type==='play'){
+                this.setPlayStatus(!this.isPlayed)
+                this.setPlayIndex(this.playIndex)
+            }else{
+                this.changeSong(type)
+            }
+        },
+        //音频播放时，初始化状态，获取音频时长
+        playSong(e){
+            this.initAudioReady = true
+            this.duration = e.target.duration
+            this.setPlayStatus(true)
+        }
     }
 }
 </script>
 
 <style lang="less" scoped>
 .bg, .left,.right,.left a,.btmbar .btns,.prv,.ply,.next,.volume,.v-column,.v-strip,
-.p-list{
+.p-list,.icon-audio-play,.icon-audio-pause{
         background: url('../../assets/playbar.png') no-repeat 0 9999px;
 }
 .cur,.m-pbar{
@@ -156,12 +287,14 @@ export default {
 .btmbar .wrap{
     width: 1000px;
     height: 50px;
-    position: absolute;
-    left: 33%;
-    top: 6px;
     margin: 0 auto;
+    position: absolute;
+    left: 20%;
+    top: 6px;
+    
     display: flex;
     align-items: center;
+    justify-content: center;
     .btns{
         display: flex;
         align-items: center;
@@ -177,6 +310,20 @@ export default {
             height: 40px;
             width: 40px;
             background-position: -0px -160px;
+            text-indent: -9999px;
+            padding-bottom: 8px;
+        }
+        .icon-audio-play{
+            height: 40px;
+            width: 40px;
+            background-position: -0px -160px;
+            text-indent: -9999px;
+            padding-bottom: 8px;
+        }
+        .icon-audio-pause{
+            height: 40px;
+            width: 40px;
+            background-position: -0px -199px;
             text-indent: -9999px;
             padding-bottom: 8px;
         }
@@ -205,6 +352,7 @@ export default {
         .m-pbar{
             width: 500px;
             margin-bottom: 10px;
+            margin-left: 10px;
             height: 9px;
             background-position: left 0;
             position: relative;
@@ -215,7 +363,7 @@ export default {
                 background-position: left -66px;
                 .f-tdn{
                     position: absolute;
-                    right: -15px;
+                    right: -5px;
                     top: -7px;
                     display: block;
                     height: 24px;
@@ -260,7 +408,7 @@ export default {
             color: #f3f3f3;
             i{
                 position: relative;
-                right: -25px;
+                right: -30px;
                 top: 2px;
             }
         }

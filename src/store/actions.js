@@ -16,6 +16,7 @@ export default {
     //播放选中歌曲
     selectPlay({commit,state},{list}){
         //合并歌曲到播放列表查看
+        // console.log(state.playList);
         const playList = concatPlaylist(list,state.playList)
         commit(types.SET_PLAYLIST,playList)
         commit(types.SET_PLAYSTATUS,true)

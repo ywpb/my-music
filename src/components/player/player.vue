@@ -3,10 +3,12 @@
         <div class="player">
             <audio 
             ref="audio"
-            preload='audio'
+            preload='metadata'
+            @canplay="canplaying"
             @playing="playSong"
             @timeupdate='updateCurrentTime'
             @ended="endedSong"
+            @error="errorSong"
             :src="curSongInfo.url"
             >
             </audio>    
@@ -52,7 +54,7 @@
                 </div>
             </div>
             <div class="p-list c-fl">
-                <i>0</i>
+                <i>{{playList.length}}</i>
             </div>
         </div>
     </div>
@@ -62,7 +64,7 @@
 
 <script>
 
-import {mapState,mapMutations} from 'vuex'
+import {mapGetters,mapMutations} from 'vuex'
 import {formatSongTime} from '@/utils/utils'
 export default {
     name:'player',
@@ -74,8 +76,11 @@ export default {
             duration:0,                       //音频总时长
         }
     },
+    created(){
+        this.setPlayList(this.playList)
+    },
     computed:{
-        ...mapState(['playList','playIndex','isPlayed']),
+        ...mapGetters(['playList','playIndex','isPlayed']),
 
         //切换播放图标样式
         playIcon(){
@@ -137,7 +142,8 @@ export default {
     methods:{
         ...mapMutations({
             setPlayStatus:'SET_PLAYSTATUS',
-            setPlayIndex:'SET_PLAYINDEX'
+            setPlayIndex:'SET_PLAYINDEX',
+            setPlayList:'SET_PLAYLIST'
         }),
         //更新当前时间
         updateCurrentTime(e){
@@ -165,6 +171,7 @@ export default {
         //切换，上一首下一首
         changeSong(type){
             if(this.playList.length !== 1){
+                // console.log(Object.prototype.toString.call(this.playIndex));
                 let index = this.playIndex
                 if(type ==='prev'){
                     index = index === 0 ? this.playList.length-1 : index - 1
@@ -173,13 +180,13 @@ export default {
                     index = index === this.playList.length-1 ? 0: index+1
                 }
                 this.initAudioReady = false
+                
                 this.setPlayIndex(index)
                 this.setPlayStatus(false)
             }else{
                 this.loopSong()
             }
 
-            
         },
         //播放状态，暂停/开始，上一首下一首
         audioHandler(type){
@@ -195,8 +202,21 @@ export default {
             this.initAudioReady = true
             this.duration = e.target.duration
             this.setPlayStatus(true)
+        },
+
+        //刷新页面时
+        canplaying(){
+            this.initAudioReady = true
+        },
+
+        //音频加载失败
+        errorSong(){
+            this.initAudioReady = false
+            this.setPlayStatus(false)
         }
-    }
+    },
+    //播放进度条
+    
 }
 </script>
 

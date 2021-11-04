@@ -12,6 +12,7 @@ VueRouter.prototype.push = function push(localhost){
 const routes = [
     {path:'/',component:()=>import('@/view/recommend.vue')},
     {path:'/playlist',name:'playlist',component:()=>import('@/components/playlist/playlist.vue')},
+    {path:'/allSongList',name:'allSongList',component:()=>import('@/view/allSongList.vue')},
 ]
 
 const router  = new VueRouter({

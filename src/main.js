@@ -17,7 +17,8 @@ import {
   Input,
   Card,
   Table,
-  TableColumn
+  TableColumn,
+  Pagination
 } from 'element-ui'
 
 Vue.use(Button)
@@ -30,6 +31,7 @@ Vue.use(Button)
 .use(Card)
 .use(Table)
 .use(TableColumn)
+.use(Pagination)
 
 Vue.config.productionTip = false
 

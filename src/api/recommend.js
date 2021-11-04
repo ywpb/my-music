@@ -18,3 +18,16 @@ export const playlistDetail = (id) => {
         }
     })
 }
+
+//获取全部歌单
+export const allSongList = ({limit=10,offset=1,cat='全部'})=>{
+    return request({
+        url:'top/playlist',
+        method:'get',
+        params:{
+            limit:limit,
+            offset:offset,
+            cat:cat
+        }
+    })
+}

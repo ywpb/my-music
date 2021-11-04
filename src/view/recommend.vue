@@ -5,7 +5,8 @@
                 <div class="topList-header">
                     <div class="topList-name">热门推荐</div>
                     <div class="more">
-                        <a href="">更多</a>
+                        <!-- <a href="">更多</a> -->
+                        <router-link :to="{name:'allSongList',query:{limit:50,offset:0}}">更多</router-link>
                     </div>
                 </div>
             </span>

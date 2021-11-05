@@ -31,8 +31,7 @@
 </template>
 
 <script>
-import layoutCard from '@/components/layout/card.vue'
-import {allSongList} from '@/api/recommend'
+import layoutCard from '@/components/card.vue'
 export default {
     name:'recommend',
     components:{layoutCard},
@@ -71,7 +70,7 @@ export default {
         //访问请求
         async getAllSongListData(parp){
             const {limit=50,offset=1,cat='全部'} = parp
-            const {data:{playlists,total}} = await allSongList({limit:limit,offset:offset})
+            const {data:{playlists,total}} = await this.$http.recommend.allSongList({limit:limit,offset:offset})
             this.songList = playlists
             this.pagination.total = total
         },

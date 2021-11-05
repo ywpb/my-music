@@ -51,8 +51,7 @@
 </template>
 
 <script>
-import layoutCard from '@/components/layout/card.vue'
-import {recomSongList} from '@/api/recommend'
+import layoutCard from '@/components/card.vue'
 export default {
     name:'recommend',
     components:{layoutCard},
@@ -70,7 +69,7 @@ export default {
         }
     },
     async mounted(){
-        const {data:{result}} = await recomSongList()
+        const {data:{result}} = await this.$http.recommend.recomSongList()
         this.songList = result.slice(0,10)
     }
 }

@@ -2,10 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router/index'
 import store from '@/store/index'
+import getApi from '@/api/api'
 
 import './assets/static/iconfont.js'
 import SvgIcon from '@/components/iconfont/svgIcon.vue'
 Vue.component("svg-icon", SvgIcon);
+
+Vue.prototype.$http = getApi
+
 
 import {
   Button,

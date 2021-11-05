@@ -20,11 +20,9 @@
 </template>
 
 <script>
-import {playlistDetail} from '@/api/recommend'
-import {allSongs,getAlbum} from '@/api/song'
-import card from '@/components/layout/card.vue'
+import card from '@/components/card.vue'
 import {formatSongInfo} from '@/utils/song.js'
-import songList from '@/components/common/song-list.vue'
+import songList from '@/components/song-list.vue'
 export default {
     name:'palylist',
     components:{
@@ -52,7 +50,7 @@ export default {
 
         //获取歌单
         async getPlaylistDetail(params){
-            const {data:res} = await playlistDetail(params);
+            const {data:res} = await this.$http.recommend.playlistDetail(params);
             this.getAllSongs(res.playlist.trackIds)
             
             this.playlist = res.playlist     
@@ -67,7 +65,7 @@ export default {
                 sliceArr.push(ids.slice(i,i+num))
             }
             for(let i=0; i<sliceArr.length; i++){
-                const {data:res} = await allSongs(sliceArr[i].map(value=>value.id).join(','))
+                const {data:res} = await this.$http.song.allSongs(sliceArr[i].map(value=>value.id).join(','))
                 console.log(res);
                 idsAll = idsAll.concat(this._formatSongs(res))
             }
@@ -77,7 +75,7 @@ export default {
             return this.$router.push({name:'playlist',query:{id}})
         },
         async album(id){
-            const {data:res} = await getAlbum(id)
+            const {data:res} = await this.$http.song.getAlbum(id)
             console.log(res);
         }
     },

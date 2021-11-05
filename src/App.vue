@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Header from '@/components/layout/header.vue'
+import Header from '@/components/header.vue'
 import Player from '@/components/player/player.vue'
 export default {
   name: 'App',

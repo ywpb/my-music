@@ -31,3 +31,22 @@ export const allSongList = ({limit=10,offset=1,cat='全部'})=>{
         }
     })
 }
+
+//所有榜单
+export const toplist = ()=>{
+    return {
+        url:'/toplist',
+        method:'get'
+    }
+}
+
+//所有榜单内容
+export const toplistDetail = (id=0)=>{
+    return {
+        url:'/toplist/detail',
+        method:'get',
+        params:{
+            id
+        }
+    }
+}

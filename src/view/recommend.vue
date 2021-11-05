@@ -24,37 +24,33 @@
             </span>
     </layout-card>
 
-    <layout-card>
-            <span slot='header'>
-                <div class="topList-header">
-                    <div class="topList-name">热门推荐</div>
-                    <div class="more">
-                        <a href="">更多</a>
-                    </div>
+    <el-card class="box-card" shadow="never">
+        <span slot='header'>
+            <div class="topList-header">
+                <div class="topList-name">榜单推荐</div>
+                <div class="more">
+                    <!-- <a href="">更多</a> -->
+                    <router-link :to="{name:'allSongList',query:{limit:50,offset:0}}">更多</router-link>
                 </div>
-            </span>
-            <span slot="main">
-                <el-row>
-                    <el-col :span="25" v-for="(o) in 10" :key="o" >
-                        <el-card :body-style="{ padding: '0px' }">
-                        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-                        <div style="padding: 14px;">
-                            <span>好吃的汉堡</span>
-                        </div>
-                        </el-card>
-                    </el-col>
-                </el-row>
-            </span>
-    </layout-card>
+            </div>
+        </span>
+        <div class="text item box-content">
+            <top-list v-for="o in 3" :key="o" ></top-list>
+        </div>
+    </el-card>
     
     </div>
 </template>
 
 <script>
 import layoutCard from '@/components/card.vue'
+import topList from '@/components/topList.vue'
 export default {
     name:'recommend',
-    components:{layoutCard},
+    components:{
+        layoutCard,
+        topList
+        },
     data(){
         return {
             songList:[]
@@ -101,6 +97,10 @@ export default {
 .el-card{
     border-radius: 0;
     border: 0;
+}
+.box-content{
+    display: flex;
+    flex-direction: row;    
 }
 
 </style>

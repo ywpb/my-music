@@ -17,14 +17,8 @@
                         </el-card>
                     </el-col>
                 </el-row>
-                <el-pagination
-                    background
-                    :page-size="50"
-                    :current-page.sync='pagination.currentPage'
-                    @current-change='handleCurrentChange'
-                    layout="prev, pager, next"
-                    :total="pagination.total">
-                </el-pagination>
+                <div>{{pagination.currentChange}}</div>
+                <paging v-bind:pagination="pagination" @handleCurrentChange='handleCurrentChange'></paging>
             </span> 
     </layout-card>    
     </div>
@@ -32,29 +26,34 @@
 
 <script>
 import layoutCard from '@/components/card.vue'
+import paging from '@/components/paging.vue'
 export default {
     name:'recommend',
-    components:{layoutCard},
+    components:{
+        layoutCard, 
+        paging
+    },
     data(){
         return {
             songList:[],
             pagination:{
                 limit:50,
                 total:0,
-                currentPage:1,      //页码
-            }
+                currentChange:1,      //页码
+            },
         }
+    },
+    
+    watch:{
+        
     },
     computed:{
         routeQuery(){
             return {
                 limit:this.pagination.limit,
-                offset:this.pagination.currentPage*this.pagination.limit
+                offset:(this.pagination.currentChange-1)*this.pagination.limit
             }
         }
-    },
-    watch:{
-        
     },
     methods:{
         //跳转到歌单详情页
@@ -62,14 +61,15 @@ export default {
             this.$router.push({name:'playlist',query:{id}})
         },
         //切换页码
-        handleCurrentChange(val){
+        handleCurrentChange(currentChange){
+            this.pagination.currentChange = currentChange
             this.getAllSongListData(this.routeQuery)
             this.getAllSongListPage(this.routeQuery)
         },
 
         //访问请求
         async getAllSongListData(parp){
-            const {limit=50,offset=1,cat='全部'} = parp
+            const {limit=50,offset=0,cat='全部'} = parp
             const {data:{playlists,total}} = await this.$http.recommend.allSongList({limit:limit,offset:offset})
             this.songList = playlists
             this.pagination.total = total

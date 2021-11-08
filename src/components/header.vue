@@ -1,7 +1,7 @@
 <template>
     <el-row type="flex" class="row-bg" justify="center">
         <router-link to="/" class="logo"><img src="@/assets/music.png" alt="logo"></router-link>
-        <el-col :span="2" v-for="menu in menuList" :key="menu.name"><router-link :to='menu.path'>{{ menu.name }}</router-link></el-col>
+        <el-col :span="2" v-for="menu in menuList" :key="menu.name"><router-link :to='menu.path'><span>{{ menu.name }}</span></router-link></el-col>
         
         <div style="margin-top: 5px;">
             <el-input placeholder="请输入内容" v-model="search" class="input-with-select" >
@@ -27,7 +27,7 @@ export default {
                     path:'/'
                 },
                 {
-                    name:'精选歌单',
+                    name:'全部歌单',
                     path:'/'
                 },{
                     name:'全部歌手',

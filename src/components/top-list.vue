@@ -7,15 +7,19 @@
                 <div class="operation">链接</div>
             </div>
         </div>
-        <div class="box-content" v-for="o in 10" :key="o">
-            <div class="id">o</div>
-            <div class="">音乐</div>
+        <div class="box-content" v-for="o in 7" :key="o">
+                <div class="song-number">{{o}}</div>
+                <div class="song-name">歌名</div>
+                <!-- <svg-icon iconname="icon-bofang" class="columnPlay">
+                </svg-icon> -->
         </div>
+
     </div>
 </template>
 
 <script>
 export default {
+    name:'topList'
 
 }
 </script>
@@ -23,7 +27,7 @@ export default {
 <style lang="less" scoped>
 .box-card{
     width: 300px;
-    height: 400px;
+    // height: 400px;
     margin: 0 30px;
     border: 1px solid #ebeef5;
     background-color: #fff;
@@ -68,9 +72,41 @@ export default {
 .box-content{
     display: flex;
     padding: 10px;
+
+    .song-number{
+        font-size: 15px;
+        margin-left: 10px;
+        margin-right: 20px;
+    }
+
+    .song-name{
+        font-size: 15px;
+    }
+
+    .columnPlay{
+        font-size: 25px;
+        display: none;
+        text-align: center;
+        position: relative;
+        left: 28px;
+        color: red;
+    }
+
+    .song-name:hover{
+        .columnPlay{
+            display: block;
+        }
+    }
+    // &:hover{
+    //     .columnPlay{
+    //         display: block;
+    //     }
+    // }
 }
 
 .box-content:nth-child(2n+1){
     background-color: #EBEEF5;
 }
+
+
 </style>

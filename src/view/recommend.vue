@@ -44,7 +44,7 @@
 
 <script>
 import layoutCard from '@/components/card.vue'
-import topList from '@/components/topList.vue'
+import topList from '@/components/top-list.vue'
 export default {
     name:'recommend',
     components:{
@@ -60,13 +60,39 @@ export default {
 
     },
     methods:{
+        //跳转歌单列表
         goPlayList(id){
             this.$router.push({name:'playlist',query:{id}})
+        },
+        //推荐歌曲列表
+        async getRecomSongList(){
+            const {data:{result}} =await this.$http.recommend.recomSongList()
+            this.songList = result.slice(0,10)
+        },
+
+        //推荐榜单
+        getTopList(){
+            this.$http.recommend.toplist().then(e=>{
+                const {data:res} = e
+                if(res.code !== 200){
+                    return alert('数据请求失败')
+                }
+                return res
+            }).then(async r =>{
+                const top_list = r.list.slice(0,3)
+                top_list.forEach(async val => {
+                    const {data} = await this.$http.recommend.playlistDetail(val.id)
+                    console.log(data);
+                });
+            })
+            
+            
         }
+        
     },
-    async mounted(){
-        const {data:{result}} = await this.$http.recommend.recomSongList()
-        this.songList = result.slice(0,10)
+    mounted(){
+        this.getRecomSongList()
+        this.getTopList()
     }
 }
 </script>

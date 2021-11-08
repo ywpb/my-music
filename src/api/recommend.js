@@ -10,6 +10,7 @@ export const recomSongList = ()=>{
 
 //获取歌单详情
 export const playlistDetail = (id) => {
+    console.log(id);
     return request({
         url:'/playlist/detail',
         method:'get',
@@ -20,7 +21,7 @@ export const playlistDetail = (id) => {
 }
 
 //获取全部歌单
-export const allSongList = ({limit=10,offset=1,cat='全部'})=>{
+export const allSongList = ({limit=10,offset=0,cat='全部'})=>{
     return request({
         url:'top/playlist',
         method:'get',
@@ -34,19 +35,19 @@ export const allSongList = ({limit=10,offset=1,cat='全部'})=>{
 
 //所有榜单
 export const toplist = ()=>{
-    return {
+    return request({
         url:'/toplist',
         method:'get'
-    }
+    })
 }
 
 //所有榜单内容
 export const toplistDetail = (id=0)=>{
-    return {
+    return request({
         url:'/toplist/detail',
         method:'get',
         params:{
             id
         }
-    }
+    })
 }

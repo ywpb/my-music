@@ -17,7 +17,6 @@
                         </el-card>
                     </el-col>
                 </el-row>
-                <div>{{pagination.currentChange}}</div>
                 <paging v-bind:pagination="pagination" @handleCurrentChange='handleCurrentChange'></paging>
             </span> 
     </layout-card>    

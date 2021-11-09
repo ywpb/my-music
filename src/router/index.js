@@ -13,6 +13,8 @@ const routes = [
     {path:'/',component:()=>import('@/view/recommend.vue')},
     {path:'/playlist',name:'playlist',component:()=>import('@/components/playlist.vue')},
     {path:'/allSongList',name:'allSongList',component:()=>import('@/view/allSongList.vue')},
+    {path:'/topArtists',name:'topArtists',component:()=>import('@/view/singer/allSinger.vue')},
+    {path:'/allArtistSongs',name:'allArtistSongs',component:()=>import('@/view/singer/allArtistSongs.vue')}
 ]
 
 const router  = new VueRouter({

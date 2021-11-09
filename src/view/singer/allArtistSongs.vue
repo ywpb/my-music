@@ -31,8 +31,18 @@ export default {
     },
     data(){
         return {
-
+            allArtistsSongs:{}
         }
+    },
+    methods:{
+        async getAllArtistsSongs({id}){
+            const {data} = await this.$http.singer.allArtistsSongs({id})
+            console.log(data);
+        }
+    },
+    mounted(){
+        const query = this.$route.query
+        this.getAllArtistsSongs({query})
     }
 }
 </script>

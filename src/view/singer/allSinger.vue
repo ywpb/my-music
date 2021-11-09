@@ -10,8 +10,8 @@
                 <el-row>
                     <el-col :span="25" v-for="(song,index) in songData" :key="index" >
                         <el-card :body-style="{ padding: '0px' }" >
-                        <img :src="song.singerImg+'?param=180y180'" class="image" @click='goArtistSongs(song.id)'>
-                        <div style="padding: 14px;" @click='goPlayList(song.singerId)'>
+                        <img :src="song.singerImg+'?param=180y180'" class="image" @click='goArtistSongs(song.singerId)'>
+                        <div style="padding: 14px;" @click='goArtistSongs(song.singerId)'>
                             <span>{{song.singerName}}</span>
                         </div>
                         </el-card>
@@ -44,7 +44,7 @@ export default {
             });
         },
         goArtistSongs(id){
-            this.$router.push({name:'allArtistSongs',query:{id}})
+            this.$router.push({name:'allArtistSongs',query:{id:id}})
         }
     },
     mounted(){

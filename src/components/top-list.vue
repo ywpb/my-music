@@ -4,23 +4,43 @@
             <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" alt="" class="image">
             <div class="box-header-right">
                 <span>榜单推荐</span>
-                <div class="operation">链接</div>
+                <div class="operation" ref='test'>链接</div>
             </div>
         </div>
-        <div class="box-content" v-for="o in 7" :key="o">
+        <div 
+            class='box-content'
+            v-for="(o,index) of 7" :key="index"
+            @mouseenter="mouseEnter(index)"
+            @mouseleave="mouseLeave(index)"
+            >
                 <div class="song-number">{{o}}</div>
                 <div class="song-name">歌名</div>
-                <!-- <svg-icon iconname="icon-bofang" class="columnPlay">
-                </svg-icon> -->
+                <div ref='svg' class="svgBox">
+                    <svg-icon  iconname="icon-bofang" class="columnPlay">
+                </svg-icon>
+                </div>
+                
         </div>
-
     </div>
 </template>
 
 <script>
 export default {
-    name:'topList'
+    name:'topList',
+    data(){
+        return {
+            start:false
+        }
+    },
+    methods:{
+        mouseEnter(index){
+            this.$refs.svg[index].style.display = 'block'
+        },
+        mouseLeave(index){
+            this.$refs.svg[index].style.display = 'none'
+        }
 
+    }
 }
 </script>
 
@@ -71,42 +91,41 @@ export default {
 
 .box-content{
     display: flex;
-    padding: 10px;
+    height: 30px;
+    flex-direction: row;
 
     .song-number{
+        margin: auto 0;
         font-size: 15px;
         margin-left: 10px;
         margin-right: 20px;
     }
 
     .song-name{
+        margin: auto 0;
         font-size: 15px;
     }
 
+    .svgBox{
+        display:none;
+        margin: auto 0;
+        // margin-right: -110px;
+        
+    }
     .columnPlay{
-        font-size: 25px;
-        display: none;
+        font-size: 20px;
         text-align: center;
         position: relative;
-        left: 28px;
+        right: -170px;
         color: red;
     }
 
-    .song-name:hover{
-        .columnPlay{
-            display: block;
-        }
-    }
-    // &:hover{
-    //     .columnPlay{
-    //         display: block;
-    //     }
-    // }
-}
+ 
+
 
 .box-content:nth-child(2n+1){
     background-color: #EBEEF5;
+    }
 }
-
 
 </style>

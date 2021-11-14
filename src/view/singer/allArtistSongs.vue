@@ -1,56 +1,58 @@
 <template>
   <div>
-        <!-- <layout-card>
+        <layout-card>
             <span slot='header'>
                 <div class="topList-header">
-                    <div class="topList-name">歌手</div>
+                    <div class="topList-name">歌手 -- {{singerInformation.singerName}}</div>
+                    <img :src="singerInformation.singerImg+'?param=800y300'" class="image">
                 </div>
             </span>
             <span slot="main">
-                <el-row>
-                    <el-col :span="25" v-for="(song,index) in songData" :key="index" >
-                        <el-card :body-style="{ padding: '0px' }" >
-                        <img :src="song.singerImg+'?param=180y180'" class="image" @click='goPlayList(song.id)'>
-                        <div style="padding: 14px;" @click='goPlayList(song.singerId)'>
-                            <span>{{song.singerName}}</span>
-                        </div>
-                        </el-card>
-                    </el-col>
-                </el-row>
+                <song-list class="songlist" :songlist='allArtistsSongs'></song-list>
             </span> 
-        </layout-card>     -->
+        </layout-card>    
     </div>
 </template>
 
 <script>
 import layoutCard from '@/components/card.vue'
+import songList from '@/components/song-list.vue'
+import {formatSongInfo} from '@/utils/song.js'
+import {mapGetters} from 'vuex'
 export default {
     name:'allArtistSongs',
     components:{
-       layoutCard 
+       layoutCard,
+       songList
     },
     data(){
         return {
-            allArtistsSongs:{}
+            allArtistsSongs:[],
         }
+    },
+    computed:{
+        
+        ...mapGetters(['singerInformation']),
     },
     methods:{
         async getAllArtistsSongs({id}){
-            const {data} = await this.$http.singer.allArtistsSongs({id})
-            console.log(data);
+            const {data:{songs}} = await this.$http.singer.allArtistsSongs({id})
+            songs.forEach(element => {
+                this.allArtistsSongs.push(formatSongInfo(element))
+            });
         }
     },
     mounted(){
-        const query = this.$route.query
-        this.getAllArtistsSongs({query})
+        const query = this.$route.query           
+        this.getAllArtistsSongs({id:query.id})
     }
 }
 </script>
 
 <style lang="less" scoped>
 .topList-header{
-    display: flex;
-    justify-content: space-between;
+    // display: flex;
+    // justify-content: space-between;
     .topList-name{
         font-size: 20px;
         font-weight: 800;
@@ -73,5 +75,69 @@ export default {
 .el-card{
     border-radius: 0;
     border: 0;
+}
+
+.table{
+    width: 100%;
+    .list-header{
+        display: flex;
+        line-height: 20px;
+        border-bottom: 1px solid #EBEEF5;
+        font-weight: bold;
+        color: #999;
+        text-align: left;
+        padding: 5px;
+    }
+    .list-scroll{
+        display: flex;
+        line-height: 25px;
+        padding: 5px;
+        font-size: 15px;
+        text-align: left;
+        .text-overflow{
+            width: 80%;
+            overflow: hidden;
+            // white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+    
+    .columnIndex{
+        width: 80px;
+        text-align: center;
+        
+        &:hover{
+            .songlist-index{
+                display: none;
+            }
+            .columnPlay{
+                display: block;
+            }
+        }
+    }
+    .songlist-index{
+        display: inline-block;
+    }
+    .columnPlay{
+        font-size: 25px;
+        display: none;
+        text-align: center;
+        position: relative;
+        left: 28px;
+        color: red;
+    }
+    .columnSong{
+        flex: 1.5;
+        
+    }
+    .columnSing{
+        flex: 2;
+    }
+    .columnAlbum{
+        flex: 1;
+    }
+    .columnTime{
+        flex: .5;
+    }
 }
 </style>

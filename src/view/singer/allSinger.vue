@@ -8,10 +8,10 @@
             </span>
             <span slot="main">
                 <el-row>
-                    <el-col :span="25" v-for="(song,index) in songData" :key="index" >
+                    <el-col :span="25" v-for="(song,index) of songData" :key="index" >
                         <el-card :body-style="{ padding: '0px' }" >
-                        <img :src="song.singerImg+'?param=180y180'" class="image" @click='goArtistSongs(song.singerId)'>
-                        <div style="padding: 14px;" @click='goArtistSongs(song.singerId)'>
+                        <img :src="song.singerImg+'?param=180y180'" class="image" @click='goArtistSongs(song,index)'>
+                        <div style="padding: 14px;" @click='goArtistSongs(song,index)'>
                             <span>{{song.singerName}}</span>
                         </div>
                         </el-card>
@@ -26,6 +26,7 @@
 <script>
 import layoutCard from '@/components/card.vue'
 import {getFromSinger} from '@/utils/filter'
+import {mapMutations} from 'vuex'
 export default {
     name:'allSinger',
     components:{
@@ -37,17 +38,31 @@ export default {
         }
     },
     methods:{
+        //设置歌手信息
+        ...mapMutations({
+            setSingerInfor:'SET_SINGERINFOR'
+        }),
+
+        //获取全部歌手
         async getSinger(){
             const {data} = await this.$http.singer.topArtists({})
             this.songData = data.artists.map(item => {
                 return getFromSinger(item)
             });
+            
         },
-        goArtistSongs(id){
-            this.$router.push({name:'allArtistSongs',query:{id:id}})
+        //进入歌手歌单页
+        goArtistSongs(song,index){
+            this.transmitData(index)
+            this.$router.push({name:'allArtistSongs',query:{id:song.singerId}})
+        },
+        transmitData(index){
+            const item = JSON.parse(JSON.stringify(this.songData[index]))
+            this.setSingerInfor(item)
         }
     },
     mounted(){
+        console.log();
         this.getSinger()
     }
 }

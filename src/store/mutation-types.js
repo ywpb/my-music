@@ -4,3 +4,6 @@ export const SET_PLAYSTATUS = 'SET_PLAYSTATUS'
 export const SET_PLAYLIST = 'SET_PLAYLIST'
 // 设置播放列表
 export const SET_PLAYINDEX = 'SET_PLAYINDEX'
+
+//设置歌手信息
+export const SET_SINGERINFOR = 'SET_SINGERINFOR'

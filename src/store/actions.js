@@ -1,6 +1,7 @@
 import utils from '@/utils/utils'
 import * as types from './mutation-types'
 
+console.log(types);
 
 //合并音乐列表
 const concatPlaylist = (list,playlist=[])=>{
@@ -34,5 +35,8 @@ export default {
         commit(types.SET_PLAYLIST,playList)
         commit(types.SET_PLAYSTATUS,true)
         // commit(types.SET_PLAYINDEX, 0)
+    },
+    songInfor({commit},item){
+        commit(types.SET_SINGERINFOR,item)
     }
 }

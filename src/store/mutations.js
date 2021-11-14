@@ -15,9 +15,13 @@ export default {
 
     //当前音乐所在位置
     [types.SET_PLAYINDEX](content,index = 0){
-        // console.log(index);
         content.playIndex = index
         window.localStorage.setItem('playIndex',index)
     },
- 
+    
+    //歌手信息
+    [types.SET_SINGERINFOR](content,item={}){
+        content.singerInformation = item
+        window.localStorage.setItem('singer',JSON.stringify(item))
+    }
 }

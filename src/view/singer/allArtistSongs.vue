@@ -51,14 +51,19 @@ export default {
 
 <style lang="less" scoped>
 .topList-header{
-    // display: flex;
-    // justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .topList-name{
         font-size: 20px;
         font-weight: 800;
+        align-self: flex-start;
     }
     .more{
         font-size: 10px;
+    }
+    .image{
+        margin: 20px;
     }
 }
 

@@ -1,7 +1,6 @@
 import utils from '@/utils/utils'
 import * as types from './mutation-types'
 
-console.log(types);
 
 //合并音乐列表
 const concatPlaylist = (list,playlist=[])=>{

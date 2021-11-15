@@ -9,7 +9,7 @@ export default {
         return state.isPlayed
     },
     singerInformation:(state)=>{
-        console.log(state.singerInformation)
-        return state.singerInformation ? state.singerInformation : JSON.parse(window.localStorage.getItem('singer'))
+        console.log(state);
+        return JSON.parse(JSON.stringify(state.singerInformation)) ? state.singerInformation : JSON.parse(window.localStorage.getItem('singer'))
     }
 }

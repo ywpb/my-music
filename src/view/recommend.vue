@@ -14,7 +14,13 @@
                 <el-row>
                     <el-col :span="25" v-for="(song) in songList" :key="song.id" >
                         <el-card :body-style="{ padding: '0px' }" >
-                        <img :src="song.picUrl" class="image" @click='goPlayList(song.id)'>
+                        <!-- <img :src="song.picUrl" class="image" @click='goPlayList(song.id)'> -->
+                        <img 
+                        class="image" 
+                        @click='goPlayList(song.id)'
+                        alt=""
+                        v-img="{src:song.picUrl,defer:true}"
+                        >
                         <div style="padding: 14px;" @click='goPlayList(song.id)'>
                             <span>{{song.name}}</span>
                         </div>
@@ -82,7 +88,6 @@ export default {
                 const top_list = r.list.slice(0,3)
                 top_list.forEach(async val => {
                     const {data} = await this.$http.recommend.playlistDetail(val.id)
-                    console.log(data);
                 });
             })
             

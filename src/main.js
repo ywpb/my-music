@@ -4,6 +4,12 @@ import router from '@/router/index'
 import store from '@/store/index'
 import getApi from '@/api/api'
 
+import VueImg from '@/directives/lazyLoad'
+
+
+//directive
+Vue.use(VueImg,{})
+
 import './assets/static/iconfont.js'
 import SvgIcon from '@/components/iconfont/svgIcon.vue'
 Vue.component("svg-icon", SvgIcon);

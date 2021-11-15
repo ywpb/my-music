@@ -2,7 +2,15 @@
     <div>
         <card>
             <div slot="header" class="playlist-header">
-                <img :src="playlist.coverImgUrl" alt="coverImg" class="cover-img">
+                <!-- <img 
+                :src="playlist.coverImgUrl" 
+                v-img="{}" 
+                alt="coverImg" 
+                class="cover-img"> -->
+                <img 
+                v-img="{src:playlist.coverImgUrl,defer:false}" 
+                alt="coverImg" 
+                class="cover-img">
                 <div class="icon-gedan">
                     <div id="cover-name">
                         <span>歌单名:{{ playlist.name }}</span>
@@ -66,7 +74,6 @@ export default {
             }
             for(let i=0; i<sliceArr.length; i++){
                 const {data:res} = await this.$http.song.allSongs(sliceArr[i].map(value=>value.id).join(','))
-                console.log(res);
                 idsAll = idsAll.concat(this._formatSongs(res))
             }
             this.songlist = idsAll
@@ -76,7 +83,6 @@ export default {
         },
         async album(id){
             const {data:res} = await this.$http.song.getAlbum(id)
-            console.log(res);
         }
     },
     computed:{

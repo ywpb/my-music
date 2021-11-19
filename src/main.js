@@ -4,11 +4,19 @@ import router from '@/router/index'
 import store from '@/store/index'
 import getApi from '@/api/api'
 
-import VueImg from '@/directives/lazyLoad'
+import VueImg from '@/directives/lazyLoad/src'
 
 
 //directive
-Vue.use(VueImg,{})
+Vue.use(VueImg, {
+  loading: '',
+  error: '',
+  prefix: '',
+  quality: 100,
+  adapt: true,
+  delay: 2000, // 单位ms,
+  cdn: '' // 选择要使用的 CDN 服务提供商，目前仅支持 `ali` 和 `qiniu`，默认为 'qiniu'
+})
 
 import './assets/static/iconfont.js'
 import SvgIcon from '@/components/iconfont/svgIcon.vue'
@@ -28,7 +36,8 @@ import {
   Card,
   Table,
   TableColumn,
-  Pagination
+  Pagination,
+  Image
 } from 'element-ui'
 
 Vue.use(Button)
@@ -42,6 +51,7 @@ Vue.use(Button)
 .use(Table)
 .use(TableColumn)
 .use(Pagination)
+.use(Image)
 
 Vue.config.productionTip = false
 

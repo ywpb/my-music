@@ -13,13 +13,12 @@
             <span slot="main">
                 <el-row>
                     <el-col :span="25" v-for="(song) in songList" :key="song.id" >
-                        <el-card :body-style="{ padding: '0px' }" >
+                        <el-card  :body-style="{ padding: '0px' }" >
                         <!-- <img :src="song.picUrl" class="image" @click='goPlayList(song.id)'> -->
                         <img 
                         class="image" 
                         @click='goPlayList(song.id)'
-                        alt=""
-                        v-img="{src:song.picUrl,defer:true}"
+                        v-img="song.picUrl"
                         >
                         <div style="padding: 14px;" @click='goPlayList(song.id)'>
                             <span>{{song.name}}</span>

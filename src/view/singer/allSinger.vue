@@ -10,7 +10,14 @@
                 <el-row>
                     <el-col :span="25" v-for="(song,index) of songData" :key="index" >
                         <el-card :body-style="{ padding: '0px' }" >
-                        <img :src="song.singerImg+'?param=180y180'" class="image" @click='goArtistSongs(song,index)'>
+                        <!-- <img :src="song.singerImg+'?param=180y180'" class="image" @click='goArtistSongs(song,index)'> -->
+
+                        <img 
+                        class="image" 
+                        v-img={}
+                        :data-img="song.singerImg+'?param=180y180'"
+                        @click='goArtistSongs(song,index)'>
+
                         <div style="padding: 14px;" @click='goArtistSongs(song,index)'>
                             <span>{{song.singerName}}</span>
                         </div>

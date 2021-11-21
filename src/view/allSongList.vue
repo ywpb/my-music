@@ -14,7 +14,9 @@
                          <img 
                          class="image" 
                          @click='goPlayList(song.id)'
-                         v-img="song.coverImgUrl+'?param=180y180'">
+                         v-img={}
+                         :data-img="song.coverImgUrl+'?param=180y180'"
+                         >
                         <div style="padding: 14px;" @click='goPlayList(song.id)'>
                             <span>{{song.name}}</span>
                         </div>
